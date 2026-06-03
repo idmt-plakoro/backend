@@ -1,0 +1,1174 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.face_types": {
+      "name": "face_types",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.types": {
+      "name": "types",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "en_name": {
+          "name": "en_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "th_name": {
+          "name": "th_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type_image": {
+          "name": "type_image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.pokemon_sets": {
+      "name": "pokemon_sets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "en_pokemon_name": {
+          "name": "en_pokemon_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "th_pokemon_name": {
+          "name": "th_pokemon_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hp": {
+          "name": "hp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type_id": {
+          "name": "type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "weakness_type_id": {
+          "name": "weakness_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "en_description": {
+          "name": "en_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "th_description": {
+          "name": "th_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pokemon_image": {
+          "name": "pokemon_image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pokemon_sets_type_id_fkey": {
+          "name": "pokemon_sets_type_id_fkey",
+          "tableFrom": "pokemon_sets",
+          "tableTo": "types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pokemon_sets_weakness_type_id_fkey": {
+          "name": "pokemon_sets_weakness_type_id_fkey",
+          "tableFrom": "pokemon_sets",
+          "tableTo": "types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "weakness_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.skill_cards": {
+      "name": "skill_cards",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "pokemon_id": {
+          "name": "pokemon_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "en_skill_name": {
+          "name": "en_skill_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "th_skill_name": {
+          "name": "th_skill_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type_id": {
+          "name": "type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "damage": {
+          "name": "damage",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "en_fighting_ability": {
+          "name": "en_fighting_ability",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "th_fighting_ability": {
+          "name": "th_fighting_ability",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "skill_cards_pokemon_id_fkey": {
+          "name": "skill_cards_pokemon_id_fkey",
+          "tableFrom": "skill_cards",
+          "tableTo": "pokemon_sets",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "pokemon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "skill_cards_type_id_fkey": {
+          "name": "skill_cards_type_id_fkey",
+          "tableFrom": "skill_cards",
+          "tableTo": "types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.effects": {
+      "name": "effects",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "directions": {
+          "name": "directions",
+          "type": "directions[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "th_effect": {
+          "name": "th_effect",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "en_effect": {
+          "name": "en_effect",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.dice_presets": {
+      "name": "dice_presets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pokemon_id": {
+          "name": "pokemon_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "en_preset_name": {
+          "name": "en_preset_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "th_preset_name": {
+          "name": "th_preset_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "dice_presets_pokemon_id_fkey": {
+          "name": "dice_presets_pokemon_id_fkey",
+          "tableFrom": "dice_presets",
+          "tableTo": "pokemon_sets",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "pokemon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "google_id": {
+          "name": "google_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.saved_slots": {
+      "name": "saved_slots",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "slot_number": {
+          "name": "slot_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slot_name": {
+          "name": "slot_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pokemon_id": {
+          "name": "pokemon_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "saved_slots_user_id_slot_number_idx": {
+          "name": "saved_slots_user_id_slot_number_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "slot_number",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "saved_slots_pokemon_id_fkey": {
+          "name": "saved_slots_pokemon_id_fkey",
+          "tableFrom": "saved_slots",
+          "tableTo": "pokemon_sets",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "pokemon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "saved_slots_user_id_fkey": {
+          "name": "saved_slots_user_id_fkey",
+          "tableFrom": "saved_slots",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "saved_slots_slot_number_check": {
+          "name": "saved_slots_slot_number_check",
+          "value": "(slot_number >= 1) AND (slot_number <= 5)"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.face_type_elements": {
+      "name": "face_type_elements",
+      "schema": "",
+      "columns": {
+        "face_type_id": {
+          "name": "face_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type_id": {
+          "name": "type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "face_type_elements_face_type_id_fkey": {
+          "name": "face_type_elements_face_type_id_fkey",
+          "tableFrom": "face_type_elements",
+          "tableTo": "face_types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "face_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "face_type_elements_type_id_fkey": {
+          "name": "face_type_elements_type_id_fkey",
+          "tableFrom": "face_type_elements",
+          "tableTo": "types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "face_type_elements_pkey": {
+          "name": "face_type_elements_pkey",
+          "columns": [
+            "face_type_id",
+            "type_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.skill_card_effects": {
+      "name": "skill_card_effects",
+      "schema": "",
+      "columns": {
+        "skill_card_id": {
+          "name": "skill_card_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "effect_id": {
+          "name": "effect_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "skill_card_effects_effect_id_fkey": {
+          "name": "skill_card_effects_effect_id_fkey",
+          "tableFrom": "skill_card_effects",
+          "tableTo": "effects",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "effect_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "skill_card_effects_skill_card_id_fkey": {
+          "name": "skill_card_effects_skill_card_id_fkey",
+          "tableFrom": "skill_card_effects",
+          "tableTo": "skill_cards",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "skill_card_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "skill_card_effects_pkey": {
+          "name": "skill_card_effects_pkey",
+          "columns": [
+            "effect_id",
+            "skill_card_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.dice_preset_skills": {
+      "name": "dice_preset_skills",
+      "schema": "",
+      "columns": {
+        "preset_id": {
+          "name": "preset_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "skill_card_id": {
+          "name": "skill_card_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "dice_preset_skills_preset_id_fkey": {
+          "name": "dice_preset_skills_preset_id_fkey",
+          "tableFrom": "dice_preset_skills",
+          "tableTo": "dice_presets",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "preset_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "dice_preset_skills_skill_card_id_fkey": {
+          "name": "dice_preset_skills_skill_card_id_fkey",
+          "tableFrom": "dice_preset_skills",
+          "tableTo": "skill_cards",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "skill_card_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "dice_preset_skills_pkey": {
+          "name": "dice_preset_skills_pkey",
+          "columns": [
+            "preset_id",
+            "skill_card_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.saved_slot_skills": {
+      "name": "saved_slot_skills",
+      "schema": "",
+      "columns": {
+        "saved_slot_id": {
+          "name": "saved_slot_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "skill_card_id": {
+          "name": "skill_card_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "saved_slot_skills_saved_slot_id_fkey": {
+          "name": "saved_slot_skills_saved_slot_id_fkey",
+          "tableFrom": "saved_slot_skills",
+          "tableTo": "saved_slots",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "saved_slot_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "saved_slot_skills_skill_card_id_fkey": {
+          "name": "saved_slot_skills_skill_card_id_fkey",
+          "tableFrom": "saved_slot_skills",
+          "tableTo": "skill_cards",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "skill_card_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "saved_slot_skills_pkey": {
+          "name": "saved_slot_skills_pkey",
+          "columns": [
+            "saved_slot_id",
+            "skill_card_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.pokemon_fixed_faces": {
+      "name": "pokemon_fixed_faces",
+      "schema": "",
+      "columns": {
+        "pokemon_id": {
+          "name": "pokemon_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "face_type_id": {
+          "name": "face_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pokemon_fixed_faces_face_type_id_fkey": {
+          "name": "pokemon_fixed_faces_face_type_id_fkey",
+          "tableFrom": "pokemon_fixed_faces",
+          "tableTo": "face_types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "face_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "pokemon_fixed_faces_pokemon_id_fkey": {
+          "name": "pokemon_fixed_faces_pokemon_id_fkey",
+          "tableFrom": "pokemon_fixed_faces",
+          "tableTo": "pokemon_sets",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "pokemon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "pokemon_fixed_faces_pkey": {
+          "name": "pokemon_fixed_faces_pkey",
+          "columns": [
+            "face_type_id",
+            "pokemon_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.pokemon_available_faces": {
+      "name": "pokemon_available_faces",
+      "schema": "",
+      "columns": {
+        "pokemon_id": {
+          "name": "pokemon_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "face_type_id": {
+          "name": "face_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pokemon_available_faces_face_type_id_fkey": {
+          "name": "pokemon_available_faces_face_type_id_fkey",
+          "tableFrom": "pokemon_available_faces",
+          "tableTo": "face_types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "face_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "pokemon_available_faces_pokemon_id_fkey": {
+          "name": "pokemon_available_faces_pokemon_id_fkey",
+          "tableFrom": "pokemon_available_faces",
+          "tableTo": "pokemon_sets",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "pokemon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "pokemon_available_faces_pkey": {
+          "name": "pokemon_available_faces_pkey",
+          "columns": [
+            "face_type_id",
+            "pokemon_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.skill_card_energy_costs": {
+      "name": "skill_card_energy_costs",
+      "schema": "",
+      "columns": {
+        "skill_card_id": {
+          "name": "skill_card_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type_id": {
+          "name": "type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "skill_card_energy_costs_skill_card_id_fkey": {
+          "name": "skill_card_energy_costs_skill_card_id_fkey",
+          "tableFrom": "skill_card_energy_costs",
+          "tableTo": "skill_cards",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "skill_card_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "skill_card_energy_costs_type_id_fkey": {
+          "name": "skill_card_energy_costs_type_id_fkey",
+          "tableFrom": "skill_card_energy_costs",
+          "tableTo": "types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "skill_card_energy_costs_pkey": {
+          "name": "skill_card_energy_costs_pkey",
+          "columns": [
+            "skill_card_id",
+            "type_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.dice_preset_faces": {
+      "name": "dice_preset_faces",
+      "schema": "",
+      "columns": {
+        "preset_id": {
+          "name": "preset_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "face_type_id": {
+          "name": "face_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "die_number": {
+          "name": "die_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "face_number": {
+          "name": "face_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "dice_preset_faces_face_type_id_fkey": {
+          "name": "dice_preset_faces_face_type_id_fkey",
+          "tableFrom": "dice_preset_faces",
+          "tableTo": "face_types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "face_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "dice_preset_faces_preset_id_fkey": {
+          "name": "dice_preset_faces_preset_id_fkey",
+          "tableFrom": "dice_preset_faces",
+          "tableTo": "dice_presets",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "preset_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "dice_preset_faces_pkey": {
+          "name": "dice_preset_faces_pkey",
+          "columns": [
+            "die_number",
+            "face_number",
+            "preset_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "dice_preset_faces_die_number_check": {
+          "name": "dice_preset_faces_die_number_check",
+          "value": "(die_number >= 1) AND (die_number <= 3)"
+        },
+        "dice_preset_faces_face_number_check": {
+          "name": "dice_preset_faces_face_number_check",
+          "value": "(face_number >= 1) AND (face_number <= 6)"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.saved_slot_faces": {
+      "name": "saved_slot_faces",
+      "schema": "",
+      "columns": {
+        "saved_slot_id": {
+          "name": "saved_slot_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "face_type_id": {
+          "name": "face_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "die_number": {
+          "name": "die_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "face_number": {
+          "name": "face_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "saved_slot_faces_face_type_id_fkey": {
+          "name": "saved_slot_faces_face_type_id_fkey",
+          "tableFrom": "saved_slot_faces",
+          "tableTo": "face_types",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "face_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "saved_slot_faces_saved_slot_id_fkey": {
+          "name": "saved_slot_faces_saved_slot_id_fkey",
+          "tableFrom": "saved_slot_faces",
+          "tableTo": "saved_slots",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "saved_slot_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "saved_slot_faces_pkey": {
+          "name": "saved_slot_faces_pkey",
+          "columns": [
+            "die_number",
+            "face_number",
+            "saved_slot_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "saved_slot_faces_die_number_check": {
+          "name": "saved_slot_faces_die_number_check",
+          "value": "(die_number >= 1) AND (die_number <= 3)"
+        },
+        "saved_slot_faces_face_number_check": {
+          "name": "saved_slot_faces_face_number_check",
+          "value": "(face_number >= 1) AND (face_number <= 6)"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.directions": {
+      "name": "directions",
+      "values": [
+        "stand",
+        "lie_on_your_back",
+        "upside_down",
+        "lie_face_down",
+        "lie_on_your_left_side",
+        "lie_on_your_right_side"
+      ],
+      "schema": "public"
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {
+      "effects": {
+        "columns": {
+          "directions": {
+            "isArray": true,
+            "dimensions": 1,
+            "rawType": "directions"
+          }
+        }
+      }
+    }
+  }
+}
