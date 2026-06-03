@@ -1,15 +1,19 @@
+# First create .env
+Create a .env file in this folder and set the required environment variables as listed in .env.example
+
 # Elysia with Bun runtime
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
+## Setup
+1. Install Bun (https://bun.sh/) if not installed.
+2. Install dependencies:
 ```bash
-bun create elysia ./elysia-example
+bun install
 ```
 
 ## Development
-To start the development server run:
+Start the development server:
 ```bash
 bun run dev
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+Open http://localhost:3000/ in your browser to see the result.
