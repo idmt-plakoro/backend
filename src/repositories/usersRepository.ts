@@ -1,7 +1,7 @@
 import { db } from "../db";
 import { users } from "../db/schema";
 import { eq } from "drizzle-orm";
-import { user, newUser } from "../models/usersModel";
+import { user, newUser, updateUser } from "../models/usersModel";
 
 export const usersRepository = {
   async findUserByGoogleId(googleId: string): Promise<user | undefined> {
@@ -43,9 +43,16 @@ export const usersRepository = {
     return user;
   },
   async createUser(newUser: newUser): Promise<user> {
-    const result = await db.insert(users).values(newUser).returning();
+    const result = await db.insert(users).values(newUser).returning({ id: users.id, googleId: users.googleId, email: users.email, displayName: users.displayName, avatarUrl: users.avatarUrl, createdAt: users.createdAt, updatedAt: users.updatedAt });
     const createdUser = result[0];
 
     return createdUser;
+  },
+  async updateUser(id: string, updates: Partial<updateUser>): Promise<user | undefined> {
+    const result = await db.update(users)
+      .set(updates)
+      .where(eq(users.id, id))
+      .returning({ id: users.id, googleId: users.googleId, email: users.email, displayName: users.displayName, avatarUrl: users.avatarUrl, createdAt: users.createdAt, updatedAt: users.updatedAt });
+    return result[0];
   }
 }

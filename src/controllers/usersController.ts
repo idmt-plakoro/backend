@@ -1,4 +1,4 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import { usersService } from "../services/usersService";
 import { authPlugin } from "../plugins/auth";
 import { exportUser } from "../models/usersModel";
@@ -53,3 +53,29 @@ export const usersController = new Elysia()
   }, {
     requireAuth: true
   })
+  .put("auth/account", async ({ set, id, email, body }) => {
+    try {
+      const updatedUser = await usersService.updateUser(id, body.displayName, body.avatarUrl);
+      const publicUser: exportUser = {
+        email: updatedUser?.email || null,
+        displayName: updatedUser?.displayName || null,
+        avatarUrl: updatedUser?.avatarUrl || null,
+        createdAt: updatedUser?.createdAt || null,
+        updatedAt: updatedUser?.updatedAt || null,
+      };
+
+      set.status = 200;
+      return {
+        success: true,
+        data: publicUser,
+      };
+    } catch (error) {
+      return handleError(set, error);
+    }
+  }, {
+    requireAuth: true,
+    body: t.Object({
+      displayName: t.Optional(t.String()),
+      avatarUrl: t.Optional(t.String()),
+    })
+  });
