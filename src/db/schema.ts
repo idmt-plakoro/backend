@@ -86,8 +86,8 @@ export const users = pgTable("users", {
 	email: text(),
 	displayName: text("display_name"),
 	avatarUrl: text("avatar_url"),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow(),
-	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'date' }).defaultNow(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'date' }).defaultNow(),
 });
 
 export const savedSlots = pgTable("saved_slots", {
@@ -96,8 +96,8 @@ export const savedSlots = pgTable("saved_slots", {
 	slotNumber: integer("slot_number").notNull(),
 	slotName: text("slot_name"),
 	pokemonId: integer("pokemon_id"),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow(),
-	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'date' }).defaultNow(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'date' }).defaultNow(),
 }, (table) => [
 	uniqueIndex("saved_slots_user_id_slot_number_idx").using("btree", table.userId.asc().nullsLast().op("int4_ops"), table.slotNumber.asc().nullsLast().op("int4_ops")),
 	foreignKey({
