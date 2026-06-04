@@ -113,23 +113,6 @@ export const savedSlots = pgTable("saved_slots", {
 	check("saved_slots_slot_number_check", sql`(slot_number >= 1) AND (slot_number <= 5)`),
 ]);
 
-export const faceTypeElements = pgTable("face_type_elements", {
-	faceTypeId: integer("face_type_id").notNull(),
-	typeId: integer("type_id").notNull(),
-}, (table) => [
-	foreignKey({
-			columns: [table.faceTypeId],
-			foreignColumns: [faceTypes.id],
-			name: "face_type_elements_face_type_id_fkey"
-		}).onDelete("cascade"),
-	foreignKey({
-			columns: [table.typeId],
-			foreignColumns: [types.id],
-			name: "face_type_elements_type_id_fkey"
-		}).onDelete("cascade"),
-	primaryKey({ columns: [table.faceTypeId, table.typeId], name: "face_type_elements_pkey"}),
-]);
-
 export const skillCardEffects = pgTable("skill_card_effects", {
 	skillCardId: integer("skill_card_id").notNull(),
 	effectId: integer("effect_id").notNull(),
@@ -179,6 +162,24 @@ export const savedSlotSkills = pgTable("saved_slot_skills", {
 			name: "saved_slot_skills_skill_card_id_fkey"
 		}).onDelete("cascade"),
 	primaryKey({ columns: [table.savedSlotId, table.skillCardId], name: "saved_slot_skills_pkey"}),
+]);
+
+export const faceTypeElements = pgTable("face_type_elements", {
+	faceTypeId: integer("face_type_id").notNull(),
+	typeId: integer("type_id").notNull(),
+	quantity: integer().default(1).notNull(),
+}, (table) => [
+	foreignKey({
+			columns: [table.faceTypeId],
+			foreignColumns: [faceTypes.id],
+			name: "face_type_elements_face_type_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.typeId],
+			foreignColumns: [types.id],
+			name: "face_type_elements_type_id_fkey"
+		}).onDelete("cascade"),
+	primaryKey({ columns: [table.faceTypeId, table.typeId], name: "face_type_elements_pkey"}),
 ]);
 
 export const pokemonFixedFaces = pgTable("pokemon_fixed_faces", {

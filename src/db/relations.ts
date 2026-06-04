@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { types, pokemonSets, skillCards, dicePresets, savedSlots, users, faceTypes, faceTypeElements, effects, skillCardEffects, dicePresetSkills, savedSlotSkills, pokemonFixedFaces, pokemonAvailableFaces, skillCardEnergyCosts, dicePresetFaces, savedSlotFaces } from "./schema";
+import { types, pokemonSets, skillCards, dicePresets, savedSlots, users, effects, skillCardEffects, dicePresetSkills, savedSlotSkills, faceTypes, faceTypeElements, pokemonFixedFaces, pokemonAvailableFaces, skillCardEnergyCosts, dicePresetFaces, savedSlotFaces } from "./schema";
 
 export const pokemonSetsRelations = relations(pokemonSets, ({one, many}) => ({
 	type_typeId: one(types, {
@@ -72,25 +72,6 @@ export const usersRelations = relations(users, ({many}) => ({
 	savedSlots: many(savedSlots),
 }));
 
-export const faceTypeElementsRelations = relations(faceTypeElements, ({one}) => ({
-	faceType: one(faceTypes, {
-		fields: [faceTypeElements.faceTypeId],
-		references: [faceTypes.id]
-	}),
-	type: one(types, {
-		fields: [faceTypeElements.typeId],
-		references: [types.id]
-	}),
-}));
-
-export const faceTypesRelations = relations(faceTypes, ({many}) => ({
-	faceTypeElements: many(faceTypeElements),
-	pokemonFixedFaces: many(pokemonFixedFaces),
-	pokemonAvailableFaces: many(pokemonAvailableFaces),
-	dicePresetFaces: many(dicePresetFaces),
-	savedSlotFaces: many(savedSlotFaces),
-}));
-
 export const skillCardEffectsRelations = relations(skillCardEffects, ({one}) => ({
 	effect: one(effects, {
 		fields: [skillCardEffects.effectId],
@@ -126,6 +107,25 @@ export const savedSlotSkillsRelations = relations(savedSlotSkills, ({one}) => ({
 		fields: [savedSlotSkills.skillCardId],
 		references: [skillCards.id]
 	}),
+}));
+
+export const faceTypeElementsRelations = relations(faceTypeElements, ({one}) => ({
+	faceType: one(faceTypes, {
+		fields: [faceTypeElements.faceTypeId],
+		references: [faceTypes.id]
+	}),
+	type: one(types, {
+		fields: [faceTypeElements.typeId],
+		references: [types.id]
+	}),
+}));
+
+export const faceTypesRelations = relations(faceTypes, ({many}) => ({
+	faceTypeElements: many(faceTypeElements),
+	pokemonFixedFaces: many(pokemonFixedFaces),
+	pokemonAvailableFaces: many(pokemonAvailableFaces),
+	dicePresetFaces: many(dicePresetFaces),
+	savedSlotFaces: many(savedSlotFaces),
 }));
 
 export const pokemonFixedFacesRelations = relations(pokemonFixedFaces, ({one}) => ({
