@@ -6,6 +6,7 @@ import { cors } from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
 import { usersController } from "./controllers/usersController";
 import { googleAuthPlugin } from "./auth/google";
+import { pokemonController } from "./controllers/pokemonController";
 
 const app = new Elysia()
   .decorate("db", db) // Decorate the app with the database instance
@@ -18,6 +19,7 @@ const app = new Elysia()
   .use(googleAuthPlugin)
   .use(typesController)
   .use(usersController)
+  .use(pokemonController)
   .get("/", () => "Hello Elysia").listen(3000);
 
 console.log(
