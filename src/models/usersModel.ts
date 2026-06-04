@@ -14,3 +14,11 @@ export type newUser = {
   displayName: string;
   avatarUrl: string;
 }
+
+export type exportUser = {
+  email: string | null;
+  displayName: string | null;
+  avatarUrl: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+}

@@ -1,6 +1,7 @@
 import { Elysia } from "elysia";
 import { usersService } from "../services/usersService";
 import { authPlugin } from "../plugins/auth";
+import { exportUser } from "../models/usersModel";
 
 declare module "elysia" {
   export interface ElysiaApp {
@@ -32,11 +33,19 @@ export const usersController = new Elysia()
           message: "User not found",
         };
       }
+      
+      const publicUser: exportUser = {
+        email: user.email,
+        displayName: user.displayName,
+        avatarUrl: user.avatarUrl,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      };
 
       set.status = 200;
       return {
         success: true,
-        data: user,
+        data: publicUser,
       };
     } catch (error) {
       return handleError(set, error);
