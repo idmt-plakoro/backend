@@ -1,7 +1,7 @@
 import { pgTable, serial, text, foreignKey, integer, uuid, timestamp, uniqueIndex, check, primaryKey, pgEnum } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
-export const directions = pgEnum("directions", ['stand', 'lie_on_your_back', 'upside_down', 'lie_face_down', 'lie_on_your_left_side', 'lie_on_your_right_side'])
+export const directions = pgEnum("directions", ['Upright', 'FaceUp', 'UpsideDown', 'FaceDown', 'LeftSide', 'RightSide'])
 
 
 export const faceTypes = pgTable("face_types", {
@@ -19,9 +19,9 @@ export const pokemonSets = pgTable("pokemon_sets", {
 	id: serial().primaryKey().notNull(),
 	enPokemonName: text("en_pokemon_name"),
 	thPokemonName: text("th_pokemon_name"),
-	hp: integer(),
-	typeId: integer("type_id"),
-	weaknessTypeId: integer("weakness_type_id"),
+	hp: integer().notNull(),
+	typeId: integer("type_id").notNull(),
+	weaknessTypeId: integer("weakness_type_id").notNull(),
 	enDescription: text("en_description"),
 	thDescription: text("th_description"),
 	pokemonImage: text("pokemon_image"),
@@ -40,11 +40,11 @@ export const pokemonSets = pgTable("pokemon_sets", {
 
 export const skillCards = pgTable("skill_cards", {
 	id: serial().primaryKey().notNull(),
-	pokemonId: integer("pokemon_id"),
+	pokemonId: integer("pokemon_id").notNull(),
 	enSkillName: text("en_skill_name"),
 	thSkillName: text("th_skill_name"),
-	typeId: integer("type_id"),
-	damage: integer(),
+	typeId: integer("type_id").notNull(),
+	damage: integer().notNull(),
 	enFightingAbility: text("en_fighting_ability"),
 	thFightingAbility: text("th_fighting_ability"),
 }, (table) => [
@@ -69,7 +69,7 @@ export const effects = pgTable("effects", {
 
 export const dicePresets = pgTable("dice_presets", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
-	pokemonId: integer("pokemon_id"),
+	pokemonId: integer("pokemon_id").notNull(),
 	enPresetName: text("en_preset_name"),
 	thPresetName: text("th_preset_name"),
 }, (table) => [
@@ -82,8 +82,8 @@ export const dicePresets = pgTable("dice_presets", {
 
 export const users = pgTable("users", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
-	googleId: text("google_id"),
-	email: text(),
+	googleId: text("google_id").notNull(),
+	email: text().notNull(),
 	displayName: text("display_name"),
 	avatarUrl: text("avatar_url"),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'date' }).defaultNow(),
@@ -92,10 +92,10 @@ export const users = pgTable("users", {
 
 export const savedSlots = pgTable("saved_slots", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
-	userId: uuid("user_id"),
+	userId: uuid("user_id").notNull(),
 	slotNumber: integer("slot_number").notNull(),
 	slotName: text("slot_name"),
-	pokemonId: integer("pokemon_id"),
+	pokemonId: integer("pokemon_id").notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'date' }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'date' }).defaultNow(),
 }, (table) => [
@@ -238,7 +238,7 @@ export const skillCardEnergyCosts = pgTable("skill_card_energy_costs", {
 
 export const dicePresetFaces = pgTable("dice_preset_faces", {
 	presetId: uuid("preset_id").notNull(),
-	faceTypeId: integer("face_type_id"),
+	faceTypeId: integer("face_type_id").notNull(),
 	dieNumber: integer("die_number").notNull(),
 	faceNumber: integer("face_number").notNull(),
 }, (table) => [
@@ -259,7 +259,7 @@ export const dicePresetFaces = pgTable("dice_preset_faces", {
 
 export const savedSlotFaces = pgTable("saved_slot_faces", {
 	savedSlotId: uuid("saved_slot_id").notNull(),
-	faceTypeId: integer("face_type_id"),
+	faceTypeId: integer("face_type_id").notNull(),
 	dieNumber: integer("die_number").notNull(),
 	faceNumber: integer("face_number").notNull(),
 }, (table) => [
