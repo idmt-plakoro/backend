@@ -8,6 +8,7 @@ import { usersController } from "./controllers/usersController";
 import { googleAuthPlugin } from "./auth/google";
 import { faceTypesController } from "./controllers/faceTypesController";
 import { pokemonController } from "./controllers/pokemonController";
+import { dicePresetsController } from "./controllers/dicePresetsController";
 
 const app = new Elysia()
   .decorate("db", db) // Decorate the app with the database instance
@@ -22,6 +23,7 @@ const app = new Elysia()
   .use(usersController)
   .use(faceTypesController)
   .use(pokemonController)
+  .use(dicePresetsController)
   .get("/", () => "Hello Elysia").listen(3000);
 
 console.log(
