@@ -10,6 +10,8 @@ declare module "elysia" {
   }
 }
 
+const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?& South\/\/=]*)$/;
+
 const handleError = (set: { status?: number | string }, error: unknown) => {
   set.status = 500;
 
@@ -76,6 +78,9 @@ export const usersController = new Elysia()
     requireAuth: true,
     body: t.Object({
       displayName: t.Optional(t.String()),
-      avatarUrl: t.Optional(t.String()),
+      avatarUrl: t.Optional(t.String({
+        pattern: urlRegex.source,
+        error: "Invalid URL format for avatarUrl"
+      })),
     })
   });
