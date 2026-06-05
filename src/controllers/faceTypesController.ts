@@ -5,7 +5,7 @@ import { exportFaceType } from "../models/faceTypesModel";
 const handleError = (set: { status?: number | string }, error: unknown) => {
   set.status = 500;
 
-  console.error("Error in typesController:", error);
+  console.error("Error in faceTypesController:", error);
 
   return {
     success: false,

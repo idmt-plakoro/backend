@@ -2,7 +2,7 @@ import { exportFaceType } from "../models/faceTypesModel";
 import { faceTypesRepository } from "../repositories/faceTypesRepository";
 
 export const faceTypesService = {
-  async listAllWithElements() {
+  async listAllWithElements(): Promise<exportFaceType[]> {
     const result = await faceTypesRepository.listAllWithElements();
 
     if (!result || result.length === 0) {

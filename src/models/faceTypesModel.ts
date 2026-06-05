@@ -1,9 +1,4 @@
-export type TypeSummary = {
-  id: number;
-  enName: string | null;
-  thName: string | null;
-  typeImage: string | null;
-};
+import { TypeSummary } from "./typesModel";
 
 export type FaceTypeElement = {
   faceTypeId: number;
