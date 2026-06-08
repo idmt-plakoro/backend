@@ -1,28 +1,15 @@
-export type SavedSlotRow = {
+export type SavedSlot = {
   id: string;
   userId: string;
   slotNumber: number;
   slotName: string | null;
   pokemonId: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type SavedSlotSkillRow = {
-  savedSlotId: string;
-  skillCardId: number;
-};
-
-export type SavedSlotFaceRow = {
-  savedSlotId: string;
-  faceTypeId: number;
-  dieNumber: number;
-  faceNumber: number;
-};
-
-export type SavedSlotFull = SavedSlotRow & {
-  skills: SavedSlotSkillRow[];
-  faces: SavedSlotFaceRow[];
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  dice1: number[];
+  dice2: number[];
+  dice3: number[];
+  skills: number[] | null;
 };
 
 export type CreateSlotBody = {
@@ -30,20 +17,16 @@ export type CreateSlotBody = {
   slotName?: string;
   pokemonId: number;
   skills: number[];
-  faces: Array<{
-    faceTypeId: number;
-    dieNumber: number;
-    faceNumber: number;
-  }>;
+  dice1: number[];
+  dice2: number[];
+  dice3: number[];
 };
 
 export type UpdateSlotBody = {
   slotName?: string;
   pokemonId?: number;
   skills?: number[];
-  faces?: Array<{
-    faceTypeId: number;
-    dieNumber: number;
-    faceNumber: number;
-  }>;
+  dice1?: number[];
+  dice2?: number[];
+  dice3?: number[];
 };
