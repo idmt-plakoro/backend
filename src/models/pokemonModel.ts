@@ -32,6 +32,7 @@ export type SkillEffectRow = {
   effectId: number | null;
   effectName: string | null;
   effectTh: string | null;
+  directions: string[] | null;
 };
 
 export type AvailableFaceRow = {

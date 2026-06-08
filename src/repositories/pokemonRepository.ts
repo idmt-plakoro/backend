@@ -39,6 +39,7 @@ export const pokemonRepository = {
         effectId: skillCardEffects.effectId,
         effectName: effects.enEffect,
         effectTh: effects.thEffect,
+        directions: effects.directions,
       })
       .from(skillCardEffects)
       .leftJoin(effects, eq(skillCardEffects.effectId, effects.id))
@@ -128,6 +129,7 @@ export const pokemonRepository = {
         effectId: skillCardEffects.effectId,
         effectName: effects.enEffect,
         effectTh: effects.thEffect,
+        directions: effects.directions,
       })
       .from(skillCardEffects)
       .leftJoin(effects, eq(skillCardEffects.effectId, effects.id))

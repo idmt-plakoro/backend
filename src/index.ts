@@ -7,6 +7,7 @@ import swagger from "@elysiajs/swagger";
 import { usersController } from "./controllers/usersController";
 import { googleAuthPlugin } from "./auth/google";
 import { pokemonController } from "./controllers/pokemonController";
+import { slotsController } from "./controllers/slotsController";
 
 const app = new Elysia()
   .decorate("db", db) // Decorate the app with the database instance
@@ -20,6 +21,7 @@ const app = new Elysia()
   .use(typesController)
   .use(usersController)
   .use(pokemonController)
+  .use(slotsController)
   .get("/", () => "Hello Elysia").listen(3000);
 
 console.log(
