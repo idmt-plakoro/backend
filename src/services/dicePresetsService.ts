@@ -16,9 +16,9 @@ export const dicePresetsService = {
       skillCards: (preset.skills || []).map(id => ({
         skillCardId: id
       })),
-      dice1: preset.dice1,
-      dice2: preset.dice2,
-      dice3: preset.dice3
+      dice1: preset.dice1.map(id => ({ faceTypeId: id })),
+      dice2: preset.dice2.map(id => ({ faceTypeId: id })),
+      dice3: preset.dice3.map(id => ({ faceTypeId: id }))
     }));
   }
 }

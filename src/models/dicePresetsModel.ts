@@ -1,6 +1,6 @@
-// type Face = {
-//   faceTypeId: number;
-// }
+type Face = {
+  faceTypeId: number;
+}
 
 type SkillCard = {
   skillCardId: number;
@@ -12,7 +12,7 @@ export type exportDicePreset = {
   enPresetName: string | null;
   thPresetName: string | null;
   skillCards: SkillCard[] | null;
-  dice1: number[];
-  dice2: number[];
-  dice3: number[];
+  dice1: Face[];
+  dice2: Face[];
+  dice3: Face[];
 }
