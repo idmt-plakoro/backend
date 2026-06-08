@@ -8,42 +8,17 @@ export const dicePresetsService = {
       throw new Error("Dice preset not found");
     }
 
-    return presets.map((preset) => {
-      const dice = Array.from(
-        preset.dicePresetFaces
-          .reduce(
-            (acc, row) => {
-              const die = acc.get(row.dieNumber) ?? {
-                diceNumber: row.dieNumber,
-                faces: []
-              };
-
-              die.faces.push({
-                faceNumber: row.faceNumber,
-                faceTypeId: row.faceTypeId
-              });
-
-              acc.set(row.dieNumber, die);
-              return acc;
-            },
-            new Map<
-              number,
-              { diceNumber: number; faces: { faceNumber: number; faceTypeId: number }[] }
-            >()
-          )
-          .values()
-      );
-
-      return {
-        dicePresetId: preset.id,
-        pokemonId: preset.pokemonId,
-        enPresetName: preset.enPresetName,
-        thPresetName: preset.thPresetName,
-        SkillCards: preset.dicePresetSkills.map((skill) => ({
-          skillCardId: skill.skillCardId
-        })),
-        dice
-      };
-    });
+    return presets.map(preset => ({
+      dicePresetId: preset.id,
+      pokemonId: preset.pokemonId,
+      enPresetName: preset.enPresetName,
+      thPresetName: preset.thPresetName,
+      skillCards: (preset.skills || []).map(id => ({
+        skillCardId: id
+      })),
+      dice1: preset.dice1,
+      dice2: preset.dice2,
+      dice3: preset.dice3
+    }));
   }
 }
