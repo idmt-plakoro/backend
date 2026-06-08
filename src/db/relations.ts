@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { types, pokemonSets, skillCards, dicePresets, savedSlots, users, effects, skillCardEffects, dicePresetSkills, savedSlotSkills, faceTypes, faceTypeElements, pokemonFixedFaces, pokemonAvailableFaces, skillCardEnergyCosts, dicePresetFaces, savedSlotFaces } from "./schema";
+import { types, pokemonSets, skillCards, dicePresets, savedSlots, users, effects, skillCardEffects, faceTypes, faceTypeElements, pokemonFixedFaces, pokemonAvailableFaces, skillCardEnergyCosts } from "./schema";
 
 export const pokemonSetsRelations = relations(pokemonSets, ({one, many}) => ({
 	type_typeId: one(types, {
@@ -41,21 +41,17 @@ export const skillCardsRelations = relations(skillCards, ({one, many}) => ({
 		references: [types.id]
 	}),
 	skillCardEffects: many(skillCardEffects),
-	dicePresetSkills: many(dicePresetSkills),
-	savedSlotSkills: many(savedSlotSkills),
 	skillCardEnergyCosts: many(skillCardEnergyCosts),
 }));
 
-export const dicePresetsRelations = relations(dicePresets, ({one, many}) => ({
+export const dicePresetsRelations = relations(dicePresets, ({one}) => ({
 	pokemonSet: one(pokemonSets, {
 		fields: [dicePresets.pokemonId],
 		references: [pokemonSets.id]
 	}),
-	dicePresetSkills: many(dicePresetSkills),
-	dicePresetFaces: many(dicePresetFaces),
 }));
 
-export const savedSlotsRelations = relations(savedSlots, ({one, many}) => ({
+export const savedSlotsRelations = relations(savedSlots, ({one}) => ({
 	pokemonSet: one(pokemonSets, {
 		fields: [savedSlots.pokemonId],
 		references: [pokemonSets.id]
@@ -64,8 +60,6 @@ export const savedSlotsRelations = relations(savedSlots, ({one, many}) => ({
 		fields: [savedSlots.userId],
 		references: [users.id]
 	}),
-	savedSlotSkills: many(savedSlotSkills),
-	savedSlotFaces: many(savedSlotFaces),
 }));
 
 export const usersRelations = relations(users, ({many}) => ({
@@ -87,28 +81,6 @@ export const effectsRelations = relations(effects, ({many}) => ({
 	skillCardEffects: many(skillCardEffects),
 }));
 
-export const dicePresetSkillsRelations = relations(dicePresetSkills, ({one}) => ({
-	dicePreset: one(dicePresets, {
-		fields: [dicePresetSkills.presetId],
-		references: [dicePresets.id]
-	}),
-	skillCard: one(skillCards, {
-		fields: [dicePresetSkills.skillCardId],
-		references: [skillCards.id]
-	}),
-}));
-
-export const savedSlotSkillsRelations = relations(savedSlotSkills, ({one}) => ({
-	savedSlot: one(savedSlots, {
-		fields: [savedSlotSkills.savedSlotId],
-		references: [savedSlots.id]
-	}),
-	skillCard: one(skillCards, {
-		fields: [savedSlotSkills.skillCardId],
-		references: [skillCards.id]
-	}),
-}));
-
 export const faceTypeElementsRelations = relations(faceTypeElements, ({one}) => ({
 	faceType: one(faceTypes, {
 		fields: [faceTypeElements.faceTypeId],
@@ -124,8 +96,6 @@ export const faceTypesRelations = relations(faceTypes, ({many}) => ({
 	faceTypeElements: many(faceTypeElements),
 	pokemonFixedFaces: many(pokemonFixedFaces),
 	pokemonAvailableFaces: many(pokemonAvailableFaces),
-	dicePresetFaces: many(dicePresetFaces),
-	savedSlotFaces: many(savedSlotFaces),
 }));
 
 export const pokemonFixedFacesRelations = relations(pokemonFixedFaces, ({one}) => ({
@@ -158,27 +128,5 @@ export const skillCardEnergyCostsRelations = relations(skillCardEnergyCosts, ({o
 	type: one(types, {
 		fields: [skillCardEnergyCosts.typeId],
 		references: [types.id]
-	}),
-}));
-
-export const dicePresetFacesRelations = relations(dicePresetFaces, ({one}) => ({
-	faceType: one(faceTypes, {
-		fields: [dicePresetFaces.faceTypeId],
-		references: [faceTypes.id]
-	}),
-	dicePreset: one(dicePresets, {
-		fields: [dicePresetFaces.presetId],
-		references: [dicePresets.id]
-	}),
-}));
-
-export const savedSlotFacesRelations = relations(savedSlotFaces, ({one}) => ({
-	faceType: one(faceTypes, {
-		fields: [savedSlotFaces.faceTypeId],
-		references: [faceTypes.id]
-	}),
-	savedSlot: one(savedSlots, {
-		fields: [savedSlotFaces.savedSlotId],
-		references: [savedSlots.id]
 	}),
 }));

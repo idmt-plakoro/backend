@@ -72,6 +72,10 @@ export const dicePresets = pgTable("dice_presets", {
 	pokemonId: integer("pokemon_id").notNull(),
 	enPresetName: text("en_preset_name"),
 	thPresetName: text("th_preset_name"),
+	dice1: integer().array().notNull(),
+	dice2: integer().array().notNull(),
+	dice3: integer().array().notNull(),
+	skills: integer().array(),
 }, (table) => [
 	foreignKey({
 			columns: [table.pokemonId],
@@ -98,6 +102,10 @@ export const savedSlots = pgTable("saved_slots", {
 	pokemonId: integer("pokemon_id").notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'date' }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'date' }).defaultNow(),
+	dice1: integer().array().notNull(),
+	dice2: integer().array().notNull(),
+	dice3: integer().array().notNull(),
+	skills: integer().array(),
 }, (table) => [
 	uniqueIndex("saved_slots_user_id_slot_number_idx").using("btree", table.userId.asc().nullsLast().op("int4_ops"), table.slotNumber.asc().nullsLast().op("int4_ops")),
 	foreignKey({
@@ -128,40 +136,6 @@ export const skillCardEffects = pgTable("skill_card_effects", {
 			name: "skill_card_effects_skill_card_id_fkey"
 		}).onDelete("cascade"),
 	primaryKey({ columns: [table.effectId, table.skillCardId], name: "skill_card_effects_pkey"}),
-]);
-
-export const dicePresetSkills = pgTable("dice_preset_skills", {
-	presetId: uuid("preset_id").notNull(),
-	skillCardId: integer("skill_card_id").notNull(),
-}, (table) => [
-	foreignKey({
-			columns: [table.presetId],
-			foreignColumns: [dicePresets.id],
-			name: "dice_preset_skills_preset_id_fkey"
-		}).onDelete("cascade"),
-	foreignKey({
-			columns: [table.skillCardId],
-			foreignColumns: [skillCards.id],
-			name: "dice_preset_skills_skill_card_id_fkey"
-		}).onDelete("cascade"),
-	primaryKey({ columns: [table.presetId, table.skillCardId], name: "dice_preset_skills_pkey"}),
-]);
-
-export const savedSlotSkills = pgTable("saved_slot_skills", {
-	savedSlotId: uuid("saved_slot_id").notNull(),
-	skillCardId: integer("skill_card_id").notNull(),
-}, (table) => [
-	foreignKey({
-			columns: [table.savedSlotId],
-			foreignColumns: [savedSlots.id],
-			name: "saved_slot_skills_saved_slot_id_fkey"
-		}).onDelete("cascade"),
-	foreignKey({
-			columns: [table.skillCardId],
-			foreignColumns: [skillCards.id],
-			name: "saved_slot_skills_skill_card_id_fkey"
-		}).onDelete("cascade"),
-	primaryKey({ columns: [table.savedSlotId, table.skillCardId], name: "saved_slot_skills_pkey"}),
 ]);
 
 export const faceTypeElements = pgTable("face_type_elements", {
@@ -234,46 +208,4 @@ export const skillCardEnergyCosts = pgTable("skill_card_energy_costs", {
 			name: "skill_card_energy_costs_type_id_fkey"
 		}).onDelete("cascade"),
 	primaryKey({ columns: [table.skillCardId, table.typeId], name: "skill_card_energy_costs_pkey"}),
-]);
-
-export const dicePresetFaces = pgTable("dice_preset_faces", {
-	presetId: uuid("preset_id").notNull(),
-	faceTypeId: integer("face_type_id").notNull(),
-	dieNumber: integer("die_number").notNull(),
-	faceNumber: integer("face_number").notNull(),
-}, (table) => [
-	foreignKey({
-			columns: [table.faceTypeId],
-			foreignColumns: [faceTypes.id],
-			name: "dice_preset_faces_face_type_id_fkey"
-		}).onDelete("cascade"),
-	foreignKey({
-			columns: [table.presetId],
-			foreignColumns: [dicePresets.id],
-			name: "dice_preset_faces_preset_id_fkey"
-		}).onDelete("cascade"),
-	primaryKey({ columns: [table.dieNumber, table.faceNumber, table.presetId], name: "dice_preset_faces_pkey"}),
-	check("dice_preset_faces_die_number_check", sql`(die_number >= 1) AND (die_number <= 3)`),
-	check("dice_preset_faces_face_number_check", sql`(face_number >= 1) AND (face_number <= 6)`),
-]);
-
-export const savedSlotFaces = pgTable("saved_slot_faces", {
-	savedSlotId: uuid("saved_slot_id").notNull(),
-	faceTypeId: integer("face_type_id").notNull(),
-	dieNumber: integer("die_number").notNull(),
-	faceNumber: integer("face_number").notNull(),
-}, (table) => [
-	foreignKey({
-			columns: [table.faceTypeId],
-			foreignColumns: [faceTypes.id],
-			name: "saved_slot_faces_face_type_id_fkey"
-		}).onDelete("cascade"),
-	foreignKey({
-			columns: [table.savedSlotId],
-			foreignColumns: [savedSlots.id],
-			name: "saved_slot_faces_saved_slot_id_fkey"
-		}).onDelete("cascade"),
-	primaryKey({ columns: [table.dieNumber, table.faceNumber, table.savedSlotId], name: "saved_slot_faces_pkey"}),
-	check("saved_slot_faces_die_number_check", sql`(die_number >= 1) AND (die_number <= 3)`),
-	check("saved_slot_faces_face_number_check", sql`(face_number >= 1) AND (face_number <= 6)`),
 ]);
