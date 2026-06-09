@@ -10,50 +10,82 @@ export type PokemonSetRow = {
   pokemonImage: string | null;
 };
 
-export type SkillCardRow = {
+export type LocalizedString = {
+  en: string | null;
+  th: string | null;
+};
+
+export type SkillCard = {
   id: number;
-  pokemonId: number | null;
-  enSkillName: string | null;
-  thSkillName: string | null;
+  name: LocalizedString;
   typeId: number | null;
   damage: number | null;
-  enFightingAbility: string | null;
-  thFightingAbility: string | null;
+  fightingAbility?: LocalizedString;
+  energyCosts: SkillEnergyCost[];
+  effects: SkillEffect[];
 };
 
-export type EnergyCostRow = {
-  skillCardId: number | null;
-  typeId: number | null;
-  quantity: number | null;
-};
+// export type SkillCardRow = {
+//   id: number;
+//   pokemonId: number | null;
+//   enSkillName: string | null;
+//   thSkillName: string | null;
+//   typeId: number | null;
+//   damage: number | null;
+//   enFightingAbility: string | null;
+//   thFightingAbility: string | null;
+// };
 
-export type SkillEffectRow = {
-  skillCardId: number | null;
-  effectId: number | null;
-  effectName: string | null;
-  effectTh: string | null;
+// export type EnergyCostRow = {
+//   skillCardId: number | null;
+//   typeId: number | null;
+//   quantity: number | null;
+// };
+
+// export type SkillEffectRow = {
+//   skillCardId: number | null;
+//   effectId: number | null;
+//   effectName: string | null;
+//   effectTh: string | null;
+//   directions: string[] | null;
+// };
+
+// export type AvailableFaceRow = {
+//   pokemonId: number | null;
+//   faceTypeId: number | null;
+//   quantity: number | null;
+// };
+
+export type DiceFace = {
+    faceTypeId: number | null;
+    quantity: number | null;
+  };
+
+export type SkillEffect = {
+  // id: number | null;
+  ability: LocalizedString;
   directions: string[] | null;
 };
 
-export type AvailableFaceRow = {
-  pokemonId: number | null;
-  faceTypeId: number | null;
+export type SkillEnergyCost = {
+  typeId: number | null;
   quantity: number | null;
 };
 
-export type FixedFaceRow = {
-  pokemonId: number | null;
-  faceTypeId: number | null;
-  quantity: number | null;
-};
+// export type SkillCardWithDetails = SkillCardRow & {
+//   energyCosts: EnergyCostRow[];
+//   effects: SkillEffectRow[];
+// };
 
-export type SkillCardWithDetails = SkillCardRow & {
-  energyCosts: EnergyCostRow[];
-  effects: SkillEffectRow[];
-};
-
-export type PokemonSetFull = PokemonSetRow & {
-  skillCards: SkillCardWithDetails[];
-  availableFaces: AvailableFaceRow[];
-  fixedFaces: FixedFaceRow[];
+export type PokemonSetFull = {
+  id: number;
+  name: LocalizedString;
+  hp: number | null;
+  typeId: number | null;
+  weaknessTypeId  : number | null;
+  description: LocalizedString;
+  pokemonImage: string | null;
+  skillCards: SkillCard[];
+  availableFaces: DiceFace[];
+  fixedFaces: DiceFace[];
 };
