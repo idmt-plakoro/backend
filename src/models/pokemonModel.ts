@@ -25,36 +25,6 @@ export type SkillCard = {
   effects: SkillEffect[];
 };
 
-// export type SkillCardRow = {
-//   id: number;
-//   pokemonId: number | null;
-//   enSkillName: string | null;
-//   thSkillName: string | null;
-//   typeId: number | null;
-//   damage: number | null;
-//   enFightingAbility: string | null;
-//   thFightingAbility: string | null;
-// };
-
-// export type EnergyCostRow = {
-//   skillCardId: number | null;
-//   typeId: number | null;
-//   quantity: number | null;
-// };
-
-// export type SkillEffectRow = {
-//   skillCardId: number | null;
-//   effectId: number | null;
-//   effectName: string | null;
-//   effectTh: string | null;
-//   directions: string[] | null;
-// };
-
-// export type AvailableFaceRow = {
-//   pokemonId: number | null;
-//   faceTypeId: number | null;
-//   quantity: number | null;
-// };
 
 export type DiceFace = {
     faceTypeId: number | null;
@@ -72,10 +42,6 @@ export type SkillEnergyCost = {
   quantity: number | null;
 };
 
-// export type SkillCardWithDetails = SkillCardRow & {
-//   energyCosts: EnergyCostRow[];
-//   effects: SkillEffectRow[];
-// };
 
 export type PokemonSetFull = {
   id: number;
