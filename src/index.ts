@@ -6,6 +6,7 @@ import { cors } from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
 import { usersController } from "./controllers/usersController";
 import { googleAuthPlugin } from "./auth/google";
+import { lineAuthPlugin } from "./auth/line";
 import { faceTypesController } from "./controllers/faceTypesController";
 import { pokemonController } from "./controllers/pokemonController";
 import { dicePresetsController } from "./controllers/dicePresetsController";
@@ -19,6 +20,7 @@ const app = new Elysia()
   .use(swagger())
   .use(authPlugin) // Use the authentication plugin
   .use(googleAuthPlugin)
+  .use(lineAuthPlugin)
   .use(typesController)
   .use(usersController)
   .use(faceTypesController)
