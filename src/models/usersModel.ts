@@ -15,6 +15,12 @@ export type newUser = {
   avatarUrl: string;
 }
 
+export type updateUser = {
+  displayName: string;
+  avatarUrl: string;
+  updatedAt: Date;
+}
+
 export type exportUser = {
   email: string | null;
   displayName: string | null;
