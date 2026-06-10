@@ -9,6 +9,7 @@ import { googleAuthPlugin } from "./auth/google";
 import { lineAuthPlugin } from "./auth/line";
 import { faceTypesController } from "./controllers/faceTypesController";
 import { pokemonController } from "./controllers/pokemonController";
+import { slotsController } from "./controllers/slotsController";
 import { dicePresetsController } from "./controllers/dicePresetsController";
 
 const app = new Elysia()
@@ -25,6 +26,7 @@ const app = new Elysia()
   .use(usersController)
   .use(faceTypesController)
   .use(pokemonController)
+  .use(slotsController)
   .use(dicePresetsController)
   .get("/", () => "Hello Elysia").listen(3000);
 
