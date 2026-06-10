@@ -7,12 +7,16 @@ async function validateSlotBody(
   body: CreateSlotBody
 ) {
   const pokemon =
-    await pokemonRepository.getPokemonSetById(
+  await pokemonRepository.getPokemonSetById(
       body.pokemonId
     );
 
   if (!pokemon) {
     throw new Error("Pokemon not found");
+  }
+
+  if (body.skills.length > 5) {
+    throw new Error("Limit 5 skills");
   }
 
   /* Dice Validation */
@@ -23,6 +27,9 @@ async function validateSlotBody(
     }
   });
 
+  //This point means the first 2 faces of each dice are for fixed faces,
+  //and the rest 4 faces are for available faces. 
+  
   const requestFixed = [
     ...body.dice1.slice(0, 2),
     ...body.dice2.slice(0, 2),
@@ -53,7 +60,7 @@ async function validateSlotBody(
     pokemonFixedFaces.toString()
   ) {
     throw new Error(
-      "Fixed faces is Invalid"
+      "Fixed faces is Invalid. Must contain exactly the fixed faces of the pokemon"
     );
   }
 
@@ -72,7 +79,7 @@ async function validateSlotBody(
 
     if (remain <= 0) {
       throw new Error(
-        `Face ${id} unavailable`
+        `Face ${id} unavailable or exceeded the limit in ${pokemon.name.en}`
       );
     }
 
@@ -81,20 +88,17 @@ async function validateSlotBody(
 
   /* Skill Validation */
 
-  const allowedSkills = new Set(
-    pokemon.skillCards.map(
-      skill => skill.id
-    )
-  );
-
+  const allowedSkills = new Set(pokemon.skillCards.map(skill => skill.id));
+  
   for (const skillId of body.skills) {
     if (!allowedSkills.has(skillId)) {
       throw new Error(
-        `Skill ${skillId} is invalid`
+        `Skill ${skillId} is invalid in ${pokemon.name.en}`
       );
     }
   }
-
+  body.skills = [...new Set(body.skills)];
+  
   return pokemon;
 }
 
@@ -153,6 +157,7 @@ export const slotsService = {
   };
 
   await validateSlotBody(mergedBody);
+  body.skills = [...new Set(mergedBody.skills)];
     return slotsRepository.updateSlot(userId, slotNumber, body);
   },
 
