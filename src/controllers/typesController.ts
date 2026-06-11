@@ -1,4 +1,4 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import { typesService } from "../services/typesService";
 
 const handleError = (set: { status?: number | string }, error: unknown) => {
@@ -26,6 +26,22 @@ export const typesController = new Elysia({ prefix: "/api/example" })
     } catch (error) {
       return handleError(set, error);
     }
+  }, {
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: t.Array(t.Object({
+          id: t.Number(),
+          enName: t.Union([t.String(), t.Null()]),
+          thName: t.Union([t.String(), t.Null()]),
+          typeImage: t.Union([t.String(), t.Null()])
+        }))
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
   })
   .get("/types-name", async ({ set }) => {
     try {
@@ -39,5 +55,19 @@ export const typesController = new Elysia({ prefix: "/api/example" })
       };
     } catch (error: unknown) {
       return handleError(set, error);
+    }
+  }, {
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: t.Array(t.Object({
+          enName: t.Union([t.String(), t.Null()]),
+          thName: t.Union([t.String(), t.Null()])
+        }))
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
     }
   });

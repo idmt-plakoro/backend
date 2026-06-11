@@ -1,4 +1,4 @@
-import Elysia from "elysia";
+import Elysia, { t } from "elysia";
 import { faceTypesService } from "../services/faceTypesService";
 import { exportFaceType } from "../models/faceTypesModel";
 
@@ -27,5 +27,24 @@ export const faceTypesController = new Elysia({ prefix: "/api/face-types" })
     } catch (error: unknown) {
       set.status = 500;
       return handleError(set, error);
+    }
+  }, {
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: t.Array(t.Object({
+          faceTypesId: t.Number(),
+          types: t.Array(t.Object({
+            id: t.Number(),
+            enName: t.Union([t.String(), t.Null()]),
+            thName: t.Union([t.String(), t.Null()]),
+            typeImage: t.Union([t.String(), t.Null()])
+          }))
+        }))
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
     }
   });

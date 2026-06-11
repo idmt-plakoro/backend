@@ -1,4 +1,4 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import { authPlugin } from "../plugins/auth";
 import { slotsService } from "../services/slotsService";
 import { CreateSlotBody, UpdateSlotBody } from "../models/slotsModel";
@@ -9,6 +9,20 @@ declare module "elysia" {
     email: string;
   }
 }
+
+const slotSchema = t.Object({
+  id: t.String(),
+  userId: t.String(),
+  slotNumber: t.Number(),
+  slotName: t.Union([t.String(), t.Null()]),
+  pokemonId: t.Number(),
+  createdAt: t.Union([t.Date(), t.Null()]),
+  updatedAt: t.Union([t.Date(), t.Null()]),
+  dice1: t.Array(t.Number()),
+  dice2: t.Array(t.Number()),
+  dice3: t.Array(t.Number()),
+  skills: t.Union([t.Array(t.Number()), t.Null()])
+});
 
 const handleError = (set: { status?: number | string }, error: unknown) => {
   set.status = 500;
@@ -25,7 +39,19 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
     } catch (error) {
       return handleError(set, error);
     }
-  }, { requireAuth: true })
+  }, {
+    requireAuth: true,
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: t.Array(slotSchema)
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
+  })
 
   .get("/:slotNumber", async ({ set, params, id }) => {
     try {
@@ -45,7 +71,30 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
     } catch (error) {
       return handleError(set, error);
     }
-  }, { requireAuth: true })
+  }, {
+    requireAuth: true,
+    params: t.Object({
+      slotNumber: t.String()
+    }),
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: slotSchema
+      }),
+      400: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      404: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
+  })
 
   .post("/", async ({ set, body, id }) => {
     try {
@@ -56,7 +105,28 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
     } catch (error) {
       return handleError(set, error);
     }
-  }, { requireAuth: true })
+  }, {
+    requireAuth: true,
+    body: t.Object({
+      slotNumber: t.Number(),
+      slotName: t.Optional(t.String()),
+      pokemonId: t.Number(),
+      skills: t.Array(t.Number()),
+      dice1: t.Array(t.Number()),
+      dice2: t.Array(t.Number()),
+      dice3: t.Array(t.Number())
+    }),
+    response: {
+      201: t.Object({
+        success: t.Boolean(),
+        data: slotSchema
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
+  })
 
   .put("/:slotNumber", async ({ set, params, body, id }) => {
     try {
@@ -77,7 +147,38 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
     } catch (error) {
       return handleError(set, error);
     }
-  }, { requireAuth: true })
+  }, {
+    requireAuth: true,
+    params: t.Object({
+      slotNumber: t.String()
+    }),
+    body: t.Object({
+      slotName: t.Optional(t.String()),
+      pokemonId: t.Optional(t.Number()),
+      skills: t.Optional(t.Array(t.Number())),
+      dice1: t.Optional(t.Array(t.Number())),
+      dice2: t.Optional(t.Array(t.Number())),
+      dice3: t.Optional(t.Array(t.Number()))
+    }),
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: slotSchema
+      }),
+      400: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      404: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
+  })
 
   .delete("/:slotNumber", async ({ set, params, id }) => {
     try {
@@ -97,4 +198,27 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
     } catch (error) {
       return handleError(set, error);
     }
-  }, { requireAuth: true });
+  }, {
+    requireAuth: true,
+    params: t.Object({
+      slotNumber: t.String()
+    }),
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      400: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      404: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
+  });

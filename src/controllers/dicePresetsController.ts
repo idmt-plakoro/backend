@@ -30,5 +30,29 @@ export const dicePresetsController = new Elysia({ prefix: "/api" })
       pokemonId: t.Number({
         error: "part param pokemonId is required and must be a number"
       })
-    })
+    }),
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: t.Array(t.Object({
+          dicePresetId: t.String(),
+          pokemonId: t.Number(),
+          enPresetName: t.Union([t.String(), t.Null()]),
+          thPresetName: t.Union([t.String(), t.Null()]),
+          skillCards: t.Union([
+            t.Null(),
+            t.Array(t.Object({
+              skillCardId: t.Number()
+            }))
+          ]),
+          dice1: t.Array(t.Object({ faceTypeId: t.Number() })),
+          dice2: t.Array(t.Object({ faceTypeId: t.Number() })),
+          dice3: t.Array(t.Object({ faceTypeId: t.Number() }))
+        }))
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
   })

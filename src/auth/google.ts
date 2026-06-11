@@ -76,7 +76,12 @@ async function fetchGoogleProfile(accessToken: string): Promise<GoogleUser> {
     if (!response.ok) {
       throw new Error(`Google profile fetch failed with status ${response.status}`);
     }
-    const result= await response.json();
+    const result = (await response.json()) as {
+      sub: string;
+      name: string;
+      email: string;
+      picture: string;
+    };
 
     return {
       sub: result.sub,
@@ -117,16 +122,20 @@ export const googleAuthPlugin = new Elysia({ prefix: "/auth" })
       ].join(" "),
     };
 
-    return redirect(`${rootUrl}?${new URLSearchParams(options).toString()}`);
+    return redirect(`${rootUrl}?${new URLSearchParams(options).toString()}`) as any;
+  }, {
+    response: {
+      302: t.String()
+    }
   })
   .get("/google/callback", async ({ query, jwt, cookie: { googleOAuthState, session }, redirect, status }) => {
-    if (!query.code) return status(400, "Authorization code missing");
+    if (!query.code) return status(400, "Authorization code missing") as any;
 
     const receivedState = query.state as string | undefined;
     const expectedState = googleOAuthState.value;
 
     if (!receivedState || !expectedState || receivedState !== expectedState) {
-      return status(400, "Invalid OAuth state");
+      return status(400, "Invalid OAuth state") as any;
     }
 
     // Invalidate the one-time OAuth state value to prevent replay.
@@ -153,9 +162,22 @@ export const googleAuthPlugin = new Elysia({ prefix: "/auth" })
       session.value = token;
       applyCookieDefaults(session, SESSION_MAX_AGE_SECONDS);
 
-      return redirect(process.env.FRONTEND_URL!);
+      return redirect(process.env.FRONTEND_URL!) as any;
     } catch (error) {
       console.error("Google authentication error:", error);
-      return status(500, "Authentication failed");
+      return status(500, "Authentication failed") as any;
+    }
+  }, {
+    query: t.Object({
+      code: t.Optional(t.String()),
+      state: t.Optional(t.String())
+    }),
+    response: {
+      302: t.String(),
+      400: t.String(),
+      500: t.String()
+    },
+    detail: {
+      hide: true
     }
   });

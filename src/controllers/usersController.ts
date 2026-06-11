@@ -12,6 +12,14 @@ declare module "elysia" {
 
 const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?& South\/\/=]*)$/;
 
+const exportUserSchema = t.Object({
+  email: t.Union([t.String(), t.Null()]),
+  displayName: t.Union([t.String(), t.Null()]),
+  avatarUrl: t.Union([t.String(), t.Null()]),
+  createdAt: t.Union([t.Date(), t.Null()]),
+  updatedAt: t.Union([t.Date(), t.Null()])
+});
+
 const handleError = (set: { status?: number | string }, error: unknown) => {
   set.status = 500;
 
@@ -53,7 +61,21 @@ export const usersController = new Elysia()
       return handleError(set, error);
     }
   }, {
-    requireAuth: true
+    requireAuth: true,
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: exportUserSchema
+      }),
+      404: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
   })
   .put("auth/account", async ({ set, id, email, body }) => {
     try {
@@ -82,5 +104,15 @@ export const usersController = new Elysia()
         pattern: urlRegex.source,
         error: "Invalid URL format for avatarUrl"
       })),
-    })
+    }),
+    response: {
+      200: t.Object({
+        success: t.Boolean(),
+        data: exportUserSchema
+      }),
+      500: t.Object({
+        success: t.Boolean(),
+        message: t.String()
+      })
+    }
   });
