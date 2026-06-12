@@ -3,40 +3,41 @@ import { pokemonService } from "../services/pokemonService";
 
 // Shared schemas
 const localizedStringSchema = t.Object({
-  en: t.Union([t.String(), t.Null()]),
-  th: t.Union([t.String(), t.Null()])
+  en: t.Optional(t.Union([t.String(), t.Null()])),
+  th: t.Optional(t.Union([t.String(), t.Null()]))
 });
 
 const pokemonSetFullSchema = t.Object({
   id: t.Number(),
   name: localizedStringSchema,
-  hp: t.Union([t.Number(), t.Null()]),
-  typeId: t.Union([t.Number(), t.Null()]),
-  weaknessTypeId: t.Union([t.Number(), t.Null()]),
+  hp: t.Optional(t.Union([t.Number(), t.Null()])),
+  typeId: t.Optional(t.Union([t.Number(), t.Null()])),
+  weaknessTypeId: t.Optional(t.Union([t.Number(), t.Null()])),
   description: localizedStringSchema,
-  pokemonImage: t.Union([t.String(), t.Null()]),
+  pokemonImage: t.Optional(t.Union([t.String(), t.Null()])),
   skillCards: t.Array(t.Object({
     id: t.Number(),
     name: localizedStringSchema,
-    typeId: t.Union([t.Number(), t.Null()]),
-    damage: t.Union([t.Number(), t.Null()]),
+    typeId: t.Optional(t.Union([t.Number(), t.Null()])),
+    damage: t.Optional(t.Union([t.Number(), t.Null()])),
+    imageUrl: t.Optional(t.Union([t.String(), t.Null()])),
     fightingAbility: t.Optional(localizedStringSchema),
     energyCosts: t.Array(t.Object({
-      typeId: t.Union([t.Number(), t.Null()]),
-      quantity: t.Union([t.Number(), t.Null()])
+      typeId: t.Optional(t.Union([t.Number(), t.Null()])),
+      quantity: t.Optional(t.Union([t.Number(), t.Null()]))
     })),
     effects: t.Array(t.Object({
       ability: localizedStringSchema,
-      directions: t.Union([t.Array(t.String()), t.Null()])
+      directions: t.Optional(t.Union([t.Array(t.String()), t.Null()]))
     }))
   })),
   availableFaces: t.Array(t.Object({
-    faceTypeId: t.Union([t.Number(), t.Null()]),
-    quantity: t.Union([t.Number(), t.Null()])
+    faceTypeId: t.Optional(t.Union([t.Number(), t.Null()])),
+    quantity: t.Optional(t.Union([t.Number(), t.Null()]))
   })),
   fixedFaces: t.Array(t.Object({
-    faceTypeId: t.Union([t.Number(), t.Null()]),
-    quantity: t.Union([t.Number(), t.Null()])
+    faceTypeId: t.Optional(t.Union([t.Number(), t.Null()])),
+    quantity: t.Optional(t.Union([t.Number(), t.Null()]))
   }))
 });
 
@@ -122,14 +123,14 @@ export const pokemonController = new Elysia({ prefix: "/api/pokemon" })
         success: t.Boolean(),
         data: t.Array(t.Object({
           id: t.Number(),
-          enPokemonName: t.Union([t.String(), t.Null()]),
-          thPokemonName: t.Union([t.String(), t.Null()]),
-          hp: t.Union([t.Number(), t.Null()]),
-          typeId: t.Union([t.Number(), t.Null()]),
-          weaknessTypeId: t.Union([t.Number(), t.Null()]),
-          enDescription: t.Union([t.String(), t.Null()]),
-          thDescription: t.Union([t.String(), t.Null()]),
-          pokemonImage: t.Union([t.String(), t.Null()])
+          enPokemonName: t.Optional(t.Union([t.String(), t.Null()])),
+          thPokemonName: t.Optional(t.Union([t.String(), t.Null()])),
+          hp: t.Optional(t.Union([t.Number(), t.Null()])),
+          typeId: t.Optional(t.Union([t.Number(), t.Null()])),
+          weaknessTypeId: t.Optional(t.Union([t.Number(), t.Null()])),
+          enDescription: t.Optional(t.Union([t.String(), t.Null()])),
+          thDescription: t.Optional(t.Union([t.String(), t.Null()])),
+          pokemonImage: t.Optional(t.Union([t.String(), t.Null()]))
         }))
       }),
       500: t.Object({

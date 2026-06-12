@@ -47,6 +47,7 @@ export const skillCards = pgTable("skill_cards", {
 	damage: integer().notNull(),
 	enFightingAbility: text("en_fighting_ability"),
 	thFightingAbility: text("th_fighting_ability"),
+	imageUrl: text("image_url"),
 }, (table) => [
 	foreignKey({
 			columns: [table.pokemonId],

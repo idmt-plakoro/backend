@@ -14,15 +14,24 @@ const slotSchema = t.Object({
   id: t.String(),
   userId: t.String(),
   slotNumber: t.Number(),
-  slotName: t.Union([t.String(), t.Null()]),
+  slotName: t.Optional(t.Union([t.String(), t.Null()])),
   pokemonId: t.Number(),
-  createdAt: t.Union([t.Date(), t.Null()]),
-  updatedAt: t.Union([t.Date(), t.Null()]),
+  createdAt: t.Optional(t.Union([t.String({ format: 'date-time' }), t.Null()])),
+  updatedAt: t.Optional(t.Union([t.String({ format: 'date-time' }), t.Null()])),
   dice1: t.Array(t.Number()),
   dice2: t.Array(t.Number()),
   dice3: t.Array(t.Number()),
-  skills: t.Union([t.Array(t.Number()), t.Null()])
+  skills: t.Optional(t.Union([t.Array(t.Number()), t.Null()]))
 });
+
+const serializeSlot = (slot: any) => {
+  if (!slot) return slot;
+  return {
+    ...slot,
+    createdAt: slot.createdAt instanceof Date ? slot.createdAt.toISOString() : slot.createdAt,
+    updatedAt: slot.updatedAt instanceof Date ? slot.updatedAt.toISOString() : slot.updatedAt,
+  };
+};
 
 const handleError = (set: { status?: number | string }, error: unknown) => {
   set.status = 500;
@@ -35,7 +44,7 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
   .get("/", async ({ set, id }) => {
     try {
       const slots = await slotsService.listSlotsByUser(id);
-      return { success: true, data: slots };
+      return { success: true, data: slots.map(serializeSlot) };
     } catch (error) {
       return handleError(set, error);
     }
@@ -67,7 +76,7 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
         return { success: false, message: "Slot not found" };
       }
 
-      return { success: true, data: slot };
+      return { success: true, data: serializeSlot(slot) };
     } catch (error) {
       return handleError(set, error);
     }
@@ -101,7 +110,7 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
       const data = body as CreateSlotBody;
       const slot = await slotsService.createSlot(id, data);
       set.status = 201;
-      return { success: true, data: slot };
+      return { success: true, data: serializeSlot(slot) };
     } catch (error) {
       return handleError(set, error);
     }
@@ -143,7 +152,7 @@ export const slotsController = new Elysia({ prefix: "/api/slots" })
         return { success: false, message: "Slot not found" };
       }
 
-      return { success: true, data: slot };
+      return { success: true, data: serializeSlot(slot) };
     } catch (error) {
       return handleError(set, error);
     }

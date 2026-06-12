@@ -24,7 +24,14 @@ export const app = new Elysia()
   .use(
     openapi({
       path: '/openapi',
-      references: fromTypes()
+      references: fromTypes(),
+      documentation: {
+        openapi: "3.1.0",
+        info: {
+          title: "Elysia Documentation",
+          version: "1.0.0"
+        }
+      }
     })
   )
   .use(authPlugin) // Use the authentication plugin

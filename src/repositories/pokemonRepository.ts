@@ -117,6 +117,7 @@ export const pokemonRepository = {
           id: card.id,
           typeId: card.typeId,
           damage: card.damage,
+          imageUrl: card.imageUrl,
           name: {
             en: card.enSkillName,
             th: card.thSkillName,
@@ -258,6 +259,7 @@ export const pokemonRepository = {
           id: card.id,
           typeId: card.typeId,
           damage: card.damage,
+          imageUrl: card.imageUrl,
           name: {
             en: card.enSkillName,
             th: card.thSkillName,

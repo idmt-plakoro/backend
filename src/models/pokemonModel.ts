@@ -20,6 +20,7 @@ export type SkillCard = {
   name: LocalizedString;
   typeId: number | null;
   damage: number | null;
+  imageUrl: string | null;
   fightingAbility?: LocalizedString;
   energyCosts: SkillEnergyCost[];
   effects: SkillEffect[];

@@ -32,9 +32,9 @@ export const typesController = new Elysia({ prefix: "/api/example" })
         success: t.Boolean(),
         data: t.Array(t.Object({
           id: t.Number(),
-          enName: t.Union([t.String(), t.Null()]),
-          thName: t.Union([t.String(), t.Null()]),
-          typeImage: t.Union([t.String(), t.Null()])
+          enName: t.Optional(t.Union([t.String(), t.Null()])),
+          thName: t.Optional(t.Union([t.String(), t.Null()])),
+          typeImage: t.Optional(t.Union([t.String(), t.Null()]))
         }))
       }),
       500: t.Object({
@@ -61,8 +61,8 @@ export const typesController = new Elysia({ prefix: "/api/example" })
       200: t.Object({
         success: t.Boolean(),
         data: t.Array(t.Object({
-          enName: t.Union([t.String(), t.Null()]),
-          thName: t.Union([t.String(), t.Null()])
+          enName: t.Optional(t.Union([t.String(), t.Null()])),
+          thName: t.Optional(t.Union([t.String(), t.Null()]))
         }))
       }),
       500: t.Object({

@@ -13,11 +13,11 @@ declare module "elysia" {
 const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?& South\/\/=]*)$/;
 
 const exportUserSchema = t.Object({
-  email: t.Union([t.String(), t.Null()]),
-  displayName: t.Union([t.String(), t.Null()]),
-  avatarUrl: t.Union([t.String(), t.Null()]),
-  createdAt: t.Union([t.Date(), t.Null()]),
-  updatedAt: t.Union([t.Date(), t.Null()])
+  email: t.Optional(t.Union([t.String(), t.Null()])),
+  displayName: t.Optional(t.Union([t.String(), t.Null()])),
+  avatarUrl: t.Optional(t.Union([t.String(), t.Null()])),
+  createdAt: t.Optional(t.Union([t.String({ format: 'date-time' }), t.Null()])),
+  updatedAt: t.Optional(t.Union([t.String({ format: 'date-time' }), t.Null()]))
 });
 
 const handleError = (set: { status?: number | string }, error: unknown) => {
@@ -44,12 +44,12 @@ export const usersController = new Elysia()
         };
       }
       
-      const publicUser: exportUser = {
+      const publicUser = {
         email: user.email,
         displayName: user.displayName,
         avatarUrl: user.avatarUrl,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+        createdAt: user.createdAt?.toISOString() || null,
+        updatedAt: user.updatedAt?.toISOString() || null,
       };
 
       set.status = 200;
@@ -80,12 +80,12 @@ export const usersController = new Elysia()
   .put("auth/account", async ({ set, id, email, body }) => {
     try {
       const updatedUser = await usersService.updateUser(id, body.displayName, body.avatarUrl);
-      const publicUser: exportUser = {
+      const publicUser = {
         email: updatedUser?.email || null,
         displayName: updatedUser?.displayName || null,
         avatarUrl: updatedUser?.avatarUrl || null,
-        createdAt: updatedUser?.createdAt || null,
-        updatedAt: updatedUser?.updatedAt || null,
+        createdAt: updatedUser?.createdAt?.toISOString() || null,
+        updatedAt: updatedUser?.updatedAt?.toISOString() || null,
       };
 
       set.status = 200;

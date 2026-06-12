@@ -37,14 +37,14 @@ export const dicePresetsController = new Elysia({ prefix: "/api" })
         data: t.Array(t.Object({
           dicePresetId: t.String(),
           pokemonId: t.Number(),
-          enPresetName: t.Union([t.String(), t.Null()]),
-          thPresetName: t.Union([t.String(), t.Null()]),
-          skillCards: t.Union([
+          enPresetName: t.Optional(t.Union([t.String(), t.Null()])),
+          thPresetName: t.Optional(t.Union([t.String(), t.Null()])),
+          skillCards: t.Optional(t.Union([
             t.Null(),
             t.Array(t.Object({
               skillCardId: t.Number()
             }))
-          ]),
+          ])),
           dice1: t.Array(t.Object({ faceTypeId: t.Number() })),
           dice2: t.Array(t.Object({ faceTypeId: t.Number() })),
           dice3: t.Array(t.Object({ faceTypeId: t.Number() }))

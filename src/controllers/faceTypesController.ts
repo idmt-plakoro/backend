@@ -36,9 +36,9 @@ export const faceTypesController = new Elysia({ prefix: "/api/face-types" })
           faceTypesId: t.Number(),
           types: t.Array(t.Object({
             id: t.Number(),
-            enName: t.Union([t.String(), t.Null()]),
-            thName: t.Union([t.String(), t.Null()]),
-            typeImage: t.Union([t.String(), t.Null()])
+            enName: t.Optional(t.Union([t.String(), t.Null()])),
+            thName: t.Optional(t.Union([t.String(), t.Null()])),
+            typeImage: t.Optional(t.Union([t.String(), t.Null()]))
           }))
         }))
       }),
